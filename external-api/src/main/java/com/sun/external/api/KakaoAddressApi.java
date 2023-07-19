@@ -2,9 +2,10 @@ package com.sun.external.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.shleter.dto.AddressApiResponse;
-import com.sun.shleter.dto.KakaoApiResponse;
-import com.sun.shleter.properties.ExternalApiProps;
+
+import com.sun.external.dto.AddressApiResponse;
+import com.sun.external.dto.KakaoApiResponse;
+import com.sun.external.properties.ExternalApiProps;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

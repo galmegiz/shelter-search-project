@@ -1,7 +1,8 @@
 package com.sun.external.service;
 
-import com.sun.shleter.api.ExternalAddressApi;
-import com.sun.shleter.dto.AddressApiResponse;
+
+import com.sun.external.api.ExternalAddressApi;
+import com.sun.external.dto.AddressApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
