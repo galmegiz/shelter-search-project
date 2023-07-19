@@ -195,7 +195,7 @@ gradle-app.setting
 *.hprof
 
 *.yml
-
+*.idea
 
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,windows,java
