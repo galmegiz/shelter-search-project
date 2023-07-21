@@ -30,8 +30,10 @@ public class KakaoApiResponse implements AddressApiResponse {
         private String addressName;
         @JsonProperty("address_type")
         private String addressType;
-        private String x; //longitude;
-        private String y; //latitude;
+        @JsonProperty("x")
+        private Double longitude; //longitude;
+        @JsonProperty("y")
+        private Double latitude; //latitude;
     }
     @Getter
     @AllArgsConstructor(access = AccessLevel.PROTECTED)

@@ -27,11 +27,11 @@ public interface AddressApiResponse {
     public static class ContentDto{
         private String addressName;
         private String addressType;
-        private String x; //longitude;
-        private String y; //latitude;
+        private Double longitude; //longitude;
+        private Double latitude; //latitude;
 
         public static ContentDto fromKakao(KakaoApiResponse.Document document) {
-            return new ContentDto(document.getAddressName(), document.getAddressType(), document.getX(), document.getY());
+            return new ContentDto(document.getAddressName(), document.getAddressType(), document.getLongitude(), document.getLatitude());
         }
     }
 }

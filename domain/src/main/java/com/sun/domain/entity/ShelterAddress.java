@@ -1,12 +1,7 @@
 package com.sun.domain.entity;
 
-import com.opencsv.bean.CsvBindByPosition;
-import com.opencsv.bean.CsvCustomBindByPosition;
-import com.opencsv.bean.CsvDate;
-import com.sun.domain.util.LocalDateConverter;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,12 +21,12 @@ public class ShelterAddress extends BaseTimeEntity{
     private String address;
     private String shelterName;
     private LocalDateTime lastModifiedDate;
-    private String x;
-    private String y;
+    private Double longitude;
+    private Double latitude;
     private String type;
 
     @Builder
-    private ShelterAddress(int no, LocalDate licenseDate, LocalDate licenseCancelDate, String state, Double area, String address, String shelterName, LocalDateTime lastModifiedDate, String x, String y, String type) {
+    private ShelterAddress(int no, LocalDate licenseDate, LocalDate licenseCancelDate, String state, Double area, String address, String shelterName, LocalDateTime lastModifiedDate, Double longitude, Double latitude, String type) {
         this.no = no;
         this.licenseDate = licenseDate;
         this.licenseCancelDate = licenseCancelDate;
@@ -40,8 +35,8 @@ public class ShelterAddress extends BaseTimeEntity{
         this.address = address;
         this.shelterName = shelterName;
         this.lastModifiedDate = lastModifiedDate;
-        this.x = x;
-        this.y = y;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.type = type;
     }
 }
