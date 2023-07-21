@@ -1,4 +1,4 @@
-package com.sun.domain.util;
+package com.sun.domain.util.csv;
 
 import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;

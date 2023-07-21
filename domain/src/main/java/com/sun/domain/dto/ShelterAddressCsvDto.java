@@ -1,20 +1,20 @@
-package com.sun.domain.util;
+package com.sun.domain.dto;
 
 import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByPosition;
 import com.opencsv.bean.CsvDate;
 import com.sun.domain.entity.ShelterAddress;
+import com.sun.domain.util.coordinate.GeoTransformUtil;
+import com.sun.domain.util.csv.LocalDateConverter;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @ToString
 @Getter
-public class ShelterAddressDto {
-
+public class ShelterAddressCsvDto {
     @CsvBindByPosition(position = 0)
     private int no;
     //@CsvDate(value = "yyyy-MM-dd")
@@ -38,13 +38,17 @@ public class ShelterAddressDto {
     private LocalDateTime lastModifiedDate;
 
     @CsvBindByPosition(position = 26)
-    private String x;
+    private Double x;
     @CsvBindByPosition(position = 27)
-    private String y;
+    private Double y;
     @CsvBindByPosition(position = 29)
     private String type;
 
-    public static ShelterAddress toEntity(ShelterAddressDto dto){
+    public static ShelterAddress toEntity(ShelterAddressCsvDto dto){
+
+
+        Double[] transformed = GeoTransformUtil.transform(dto.getX(), dto.getY());
+
         return ShelterAddress.builder()
                              .no(dto.getNo())
                              .licenseDate(dto.getLicenseDate())
@@ -54,9 +58,10 @@ public class ShelterAddressDto {
                              .address(dto.getAddress())
                              .shelterName(dto.getShelterName())
                              .lastModifiedDate(dto.getLastModifiedDate())
-                             .x(dto.getX())
-                             .y(dto.getY())
+                             .latitude(transformed[0])
+                             .longitude(transformed[1])
                              .type(dto.getType())
                              .build();
     }
+
 }
