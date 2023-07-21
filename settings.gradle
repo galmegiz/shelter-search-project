@@ -1,4 +1,5 @@
 rootProject.name = 'shleter'
 include 'external-api'
 include 'presentation'
+include 'domain'
 
