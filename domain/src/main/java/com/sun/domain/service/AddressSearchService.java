@@ -3,6 +3,7 @@ package com.sun.domain.service;
 import com.sun.domain.dto.AddressInfoDto;
 import com.sun.domain.dto.ClientAddressDto;
 import com.sun.domain.exception.BaseException;
+import com.sun.domain.exception.CoordinateNotFoundException;
 import com.sun.external.dto.AddressApiResponse;
 import com.sun.external.service.ExternalAddressApiService;
 import lombok.RequiredArgsConstructor;
@@ -23,25 +24,24 @@ public class AddressSearchService {
         AddressApiResponse apiResponse = externalAddressApiService.searchAddress(query);
 
         if (Objects.isNull(apiResponse)) {
-            log.error("No adress result");
-            throw new BaseException();
+            log.error("No search result from API");
+            throw new CoordinateNotFoundException(query);
         }
-
 
         return AddressInfoDto.fromApiResponse(apiResponse);
     }
 
-    public Optional<ClientAddressDto> searchClientAddress(String query){
+    public ClientAddressDto searchClientAddress(String query){
         AddressApiResponse apiResponse = externalAddressApiService.searchAddress(query);
 
         if (Objects.isNull(apiResponse) || CollectionUtils.isEmpty(apiResponse.getContents())) {
-            log.error("No adress result");
-            return Optional.empty();
+            log.error("No search result from API");
+            throw new CoordinateNotFoundException(query);
         }
 
         //clientAddress api 응답
         AddressApiResponse.ContentDto clientAddressInfo = apiResponse.getContents().get(0);
-        return Optional.of(ClientAddressDto.from(clientAddressInfo));
+        return ClientAddressDto.from(clientAddressInfo);
     }
 
 }
