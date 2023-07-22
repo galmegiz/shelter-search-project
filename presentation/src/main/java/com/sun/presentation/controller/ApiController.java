@@ -5,7 +5,7 @@ import com.sun.domain.dto.ShelterRecommendDto;
 import com.sun.domain.service.AddressSearchService;
 import com.sun.domain.service.ShelterAddressManageService;
 import com.sun.domain.service.ShelterRecommendService;
-import com.sun.external.service.ExternalAddressApiService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,27 +18,27 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 public class ApiController {
 
-    private final ExternalAddressApiService externalAddressApiService;
+
     private final ShelterAddressManageService shelterAddressService;
     private final ShelterRecommendService shelterRecommendService;
     private final AddressSearchService addressSearchService;
 
 
-    @GetMapping("test")
+    @GetMapping("/test")
     public ResponseEntity get(String query) {
-        return ResponseEntity.ok(externalAddressApiService.searchAddress(query, null, null, null));
+        return ResponseEntity.ok(addressSearchService.searchAddressInfo(query));
     }
 
-    @GetMapping("save")
+    @GetMapping("/save")
     public String save() throws IOException {
         shelterAddressService.save();
         return "success";
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
     public ResponseEntity search(String query) {
         ClientAddressDto clientAddress = addressSearchService.searchClientAddress(query).orElseThrow(() -> {throw new RuntimeException();});
         List<ShelterRecommendDto> shelterRecommendDtos = shelterRecommendService.recommendShelter(clientAddress);
