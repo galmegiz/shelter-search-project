@@ -14,7 +14,9 @@ public class GeoTransformUtil {
 
         CRSFactory crsFactory = new CRSFactory();
         CoordinateReferenceSystem EPSG_2097 = crsFactory.createFromParameters("EPSG:2097", srcCrsString); // Bessel 중부원점TM(EPSG:2097)
+        //CoordinateReferenceSystem EPSG_2097 = crsFactory.createFromName("epsg:2097"); // Bessel 중부원점TM(EPSG:2097)
         CoordinateReferenceSystem EPSG_4326 = crsFactory.createFromParameters("EPSG:4326", targetCrsString); // 경/위도
+        //CoordinateReferenceSystem EPSG_4326 = crsFactory.createFromName("epsg:4326"); // 경/위도
 
         CoordinateTransformFactory ctFactory = new CoordinateTransformFactory();
         CoordinateTransform wgsToUtm = ctFactory.createTransform(EPSG_2097, EPSG_4326);

@@ -2,7 +2,6 @@ package com.sun.domain.service;
 
 import com.sun.domain.dto.AddressInfoDto;
 import com.sun.domain.dto.ClientAddressDto;
-import com.sun.domain.exception.BaseException;
 import com.sun.domain.exception.CoordinateNotFoundException;
 import com.sun.external.dto.AddressApiResponse;
 import com.sun.external.service.ExternalAddressApiService;
