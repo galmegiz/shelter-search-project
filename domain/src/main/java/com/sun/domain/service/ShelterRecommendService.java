@@ -3,10 +3,10 @@ package com.sun.domain.service;
 import com.sun.domain.dto.ClientAddressDto;
 import com.sun.domain.dto.ShelterRecommendDto;
 import com.sun.domain.util.distance.DistanceCalculateUtil;
-import com.sun.external.dto.AddressApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,15 +19,23 @@ import java.util.Objects;
 public class ShelterRecommendService {
 
     private final ShelterAddressManageService shelterAddressManageService;
+    private final ShelterAddressCacheService shelterAddressCacheService;
     private final DistanceCalculateUtil distanceCalculateUtil;
 
-    public List<ShelterRecommendDto> recommendShelter(ClientAddressDto clientAddressDto){
+    public List<ShelterRecommendDto> recommendShelter(String query, ClientAddressDto clientAddressDto){
+        List<ShelterRecommendDto> results = shelterAddressCacheService.findByAddress(query);
 
-        List<ShelterRecommendDto> results = recommendShortedPathShelter(clientAddressDto, 10);
+        if (!CollectionUtils.isEmpty(results)) {
+            log.debug("Recommended Shelter Info In Cache");
+            return results;
+        }
+
+        results = recommendShortestPathShelter(clientAddressDto, 10);
+        shelterAddressCacheService.saveRecommendedShelter(query, results);
         return results;
     }
 
-    private List<ShelterRecommendDto> recommendShortedPathShelter(ClientAddressDto clientAddressDto, int maxCount) {
+    private List<ShelterRecommendDto> recommendShortestPathShelter(ClientAddressDto clientAddressDto, int maxCount) {
         if(Objects.isNull(clientAddressDto)) return Collections.emptyList();
 
         return shelterAddressManageService.getAllAddresses()

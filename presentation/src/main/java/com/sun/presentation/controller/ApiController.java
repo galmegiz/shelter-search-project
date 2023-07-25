@@ -10,6 +10,7 @@ import com.sun.presentation.constant.ResponseCode;
 import com.sun.presentation.dto.Response;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 @RequestMapping("/api/v1")
 public class ApiController {
 
@@ -41,7 +43,7 @@ public class ApiController {
     @GetMapping("/recommend-shelter")
     public ResponseEntity<Response> recommendShelter(String query) {
         ClientAddressDto clientAddress = addressSearchService.searchClientAddress(query);
-        List<ShelterRecommendDto> shelterRecommendDtos = shelterRecommendService.recommendShelter(clientAddress);
+        List<ShelterRecommendDto> shelterRecommendDtos = shelterRecommendService.recommendShelter(query, clientAddress);
         return ResponseEntity.status(HttpStatus.OK).body(Response.success(shelterRecommendDtos));
     }
 }
