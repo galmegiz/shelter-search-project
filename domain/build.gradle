@@ -21,6 +21,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
 
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
 
     //기타
     compileOnly 'org.projectlombok:lombok'
