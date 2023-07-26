@@ -17,7 +17,7 @@ public class ExternalAddressApiServiceImpl implements ExternalAddressApiService{
     @Override
     public AddressApiResponse searchAddress(String query, String analyzeType, Integer page, Integer size) {
         for (ExternalAddressApi addressApi : externalAddressApi) {
-            AddressApiResponse result = addressApi.searchAddress(query, analyzeType, page, size);
+            AddressApiResponse result = addressApi.searchAddress(query, page, size);
             if (result != null && !CollectionUtils.isEmpty(result.getContents())) {
                 return result;
             }

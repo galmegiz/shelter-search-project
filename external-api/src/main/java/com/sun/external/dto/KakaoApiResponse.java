@@ -7,7 +7,6 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Getter
 @AllArgsConstructor
 public class KakaoApiResponse implements AddressApiResponse {
     private List<Document> documents;
