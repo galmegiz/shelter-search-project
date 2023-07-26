@@ -13,7 +13,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class KakaoAddressApi implements ExternalAddressApi {
     private static final String PARAM_KEY_SIZE = "size";
 
     @Qualifier("kakaoRestTemplate")
-    private final RestTemplate restTemplate;
+    private final RestTemplate kakaoRestTemplate;
     private final ExternalApiProps apiProperty;
     private final ObjectMapper objectMapper;
     @Retryable(retryFor = {HttpClientErrorException.class}, maxAttempts = 3, recover = "recover")
@@ -51,7 +50,7 @@ public class KakaoAddressApi implements ExternalAddressApi {
         RequestEntity request = RequestEntity.get(uri)
                 .header(HttpHeaders.AUTHORIZATION, apiProperty.getKakao().getAuthKey())
                 .build();
-        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+        ResponseEntity<String> response = kakaoRestTemplate.exchange(request, String.class);
 
         try {
             return objectMapper.readValue(response.getBody(), KakaoApiResponse.class);

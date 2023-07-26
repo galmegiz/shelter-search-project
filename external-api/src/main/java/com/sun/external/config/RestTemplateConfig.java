@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RestTemplateConfig {
     @Bean
-    @Qualifier("kakaoRestTemplate")
     public RestTemplate kakaoRestTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(5))
@@ -33,7 +32,6 @@ public class RestTemplateConfig {
     }
 
     @Bean
-    @Qualifier("naverRestTemplate")
     public RestTemplate naverRestTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(5))

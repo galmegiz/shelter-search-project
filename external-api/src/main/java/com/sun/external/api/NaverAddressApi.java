@@ -3,14 +3,12 @@ package com.sun.external.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.external.dto.AddressApiResponse;
-import com.sun.external.dto.KakaoApiResponse;
 import com.sun.external.dto.NaverApiResponse;
 import com.sun.external.properties.ExternalApiProps;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Recover;
@@ -35,7 +33,7 @@ public class NaverAddressApi implements ExternalAddressApi{
     private static final String HEADER_KEY = "X-NCP-APIGW-API-KEY";
 
     @Qualifier("naverRestTemplate")
-    private final RestTemplate restTemplate;
+    private final RestTemplate naverRestTemplate;
     private final ExternalApiProps apiProperty;
     private final ObjectMapper objectMapper;
     @Retryable(retryFor = {HttpClientErrorException.class}, maxAttempts = 3, recover = "recover")
@@ -52,7 +50,7 @@ public class NaverAddressApi implements ExternalAddressApi{
                                              .header(HEADER_KEY_ID, apiProperty.getNaver().getKeyId())
                                              .header(HEADER_KEY, apiProperty.getNaver().getKey())
                                              .build();
-        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+        ResponseEntity<String> response = naverRestTemplate.exchange(request, String.class);
 
         try {
             return objectMapper.readValue(response.getBody(), NaverApiResponse.class);
