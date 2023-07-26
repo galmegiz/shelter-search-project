@@ -11,7 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,6 +34,7 @@ public class KakaoAddressApi implements ExternalAddressApi {
     private final RestTemplate restTemplate;
     private final ExternalApiProps apiProperty;
     private final ObjectMapper objectMapper;
+    @Retryable(retryFor = {HttpClientErrorException.class}, maxAttempts = 3, recover = "recover")
     @Override
     public AddressApiResponse searchAddress(String query, String analyzeType, Integer page, Integer size) {
         URI uri = UriComponentsBuilder.fromHttpUrl(apiProperty.getKakao().getUri())
@@ -43,13 +48,21 @@ public class KakaoAddressApi implements ExternalAddressApi {
         RequestEntity request = RequestEntity.get(uri)
                 .header(HttpHeaders.AUTHORIZATION, apiProperty.getKakao().getAuthKey())
                 .build();
-
         ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
         try {
             return objectMapper.readValue(response.getBody(), KakaoApiResponse.class);
         } catch (JsonProcessingException e) {
             log.error("External Api response parsing error", e);
             throw new RuntimeException(e);
         }
+    }
+
+
+
+    @Recover
+    public AddressApiResponse recover(HttpClientErrorException e, String query, String analyzeType, Integer page, Integer size) {
+        log.error("All request to Kakao Api is failed, query = {}, error response = {}", query, e.getMessage());
+        return null;
     }
 }
