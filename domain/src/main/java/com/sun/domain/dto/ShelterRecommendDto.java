@@ -20,5 +20,4 @@ public class ShelterRecommendDto {
     private String address;
     private LocalDateTime lastModifiedDate;
     private Double distance;
-    private String url;
 }
