@@ -50,7 +50,6 @@ public class ShelterRecommendService {
                                                                                         .state(shelterAddressDto.getState())
                                                                                         .area(shelterAddressDto.getArea())
                                                                                         .lastModifiedDate(shelterAddressDto.getLastModifiedDate())
-                                                                                        .url("aaa")
                                                                                         .distance(distanceCalculateUtil.calculateDistance(clientAddressDto.getLatitude(), clientAddressDto.getLongitude(), shelterAddressDto.getLatitude(), shelterAddressDto.getLongitude()))
                                                                                         .build()
                                                 )

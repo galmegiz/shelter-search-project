@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.List;
 public class ShelterAddressManageService {
 
     private final ShelterAddressRepository addressRepository;
-    private final ShelterAddressCacheService shelterAddressCacheService;
+    //private final ShelterAddressRedisCacheService shelterAddressCacheService;
 
     public void save() throws IOException {
         addressRepository.deleteAll();
