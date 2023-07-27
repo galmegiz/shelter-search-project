@@ -19,7 +19,7 @@
 
 # 🗃️프로젝트 구조
 <details>
-<summary>핵심 구조도</summary>
+<summary>핵심 구조도(접기/펼치기)</summary>
   
 ![구조](https://github.com/galmegiz/shelter-search-project/assets/126640838/c4262e8e-6ec7-48a5-9b7d-4ee6c3fb025b)
 
