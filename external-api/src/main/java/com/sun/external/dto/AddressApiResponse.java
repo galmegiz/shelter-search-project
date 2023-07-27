@@ -20,6 +20,10 @@ public interface AddressApiResponse {
         public static MetaDto fromKakao(KakaoApiResponse.Meta meta) {
             return new MetaDto(meta.getTotalCount(), meta.getPageableCount(), meta.getIsEnd());
         }
+
+        public static MetaDto fromNaver(NaverApiResponse.Meta meta) {
+            return new MetaDto(meta.getTotalCount(), meta.getCount(), meta.getTotalCount() <= 10 * meta.getPage());
+        }
     }
 
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,6 +36,10 @@ public interface AddressApiResponse {
 
         public static ContentDto fromKakao(KakaoApiResponse.Document document) {
             return new ContentDto(document.getAddressName(), document.getAddressType(), document.getLongitude(), document.getLatitude());
+        }
+
+        public static ContentDto fromNaver(NaverApiResponse.Address address) {
+            return new ContentDto(address.getRoadAddress(), "ROAD_ADDR", Double.valueOf(address.getLongitude()), Double.valueOf(address.getLatitude()));
         }
     }
 }

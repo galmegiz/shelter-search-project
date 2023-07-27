@@ -18,18 +18,20 @@ import java.util.Objects;
 @Slf4j
 public class ShelterRecommendService {
 
+    private final AddressSearchService addressSearchService;
     private final ShelterAddressManageService shelterAddressManageService;
     private final ShelterAddressCacheService shelterAddressCacheService;
     private final DistanceCalculateUtil distanceCalculateUtil;
 
-    public List<ShelterRecommendDto> recommendShelter(String query, ClientAddressDto clientAddressDto){
+    public List<ShelterRecommendDto> recommendShelter(String query){
         List<ShelterRecommendDto> results = shelterAddressCacheService.findByAddress(query);
 
         if (!CollectionUtils.isEmpty(results)) {
-            log.debug("Recommended Shelter Info In Cache");
+            log.info("Recommended Shelter Info In Cache");
             return results;
         }
 
+        ClientAddressDto clientAddressDto = addressSearchService.searchClientAddress(query);
         results = recommendShortestPathShelter(clientAddressDto, 10);
         shelterAddressCacheService.saveRecommendedShelter(query, results);
         return results;

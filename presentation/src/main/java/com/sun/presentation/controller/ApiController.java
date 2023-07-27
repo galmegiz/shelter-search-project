@@ -42,8 +42,7 @@ public class ApiController {
 
     @GetMapping("/recommend-shelter")
     public ResponseEntity<Response> recommendShelter(String query) {
-        ClientAddressDto clientAddress = addressSearchService.searchClientAddress(query);
-        List<ShelterRecommendDto> shelterRecommendDtos = shelterRecommendService.recommendShelter(query, clientAddress);
+        List<ShelterRecommendDto> shelterRecommendDtos = shelterRecommendService.recommendShelter(query);
         return ResponseEntity.status(HttpStatus.OK).body(Response.success(shelterRecommendDtos));
     }
 }
